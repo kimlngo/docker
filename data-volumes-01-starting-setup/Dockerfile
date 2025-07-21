@@ -8,9 +8,11 @@ RUN npm install
 
 COPY . /app 
 
-ENV PORT=80
+ARG DEFAULT_PORT=80
 
-EXPOSE $PORT
+ENV PORT=DEFAULT_PORT
+
+EXPOSE $DEFAULT_PORT
 
 #anonymous volume
 #VOLUME [ "/app/feefback" ]
