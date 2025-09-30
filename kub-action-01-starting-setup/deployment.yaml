@@ -15,5 +15,11 @@ spec:
       containers:
         - name: second-node
           image: kimlngo/kub-first-app:v2 #image should be from a repository
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 3
+            initialDelaySeconds: 5
         # - name: ...
         #   image: ...
