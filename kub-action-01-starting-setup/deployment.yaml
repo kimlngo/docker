@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment #to tell what type of operation: Deployment, Service, Job
+metadata:
+  name: second-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-app
+  template:
+    metadata:
+      labels:
+        app: second-app
+    spec:
+      containers:
+        - name: second-node
+          image: kimlngo/kub-first-app:v2 #image should be from a repository
+        # - name: ...
+        #   image: ...
