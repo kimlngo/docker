@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: story-deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: story-app
@@ -21,4 +21,6 @@ spec:
               name: story-volume #this name should match with the volume/name below to "wire" the connection between the app and volume
       volumes:
         - name: story-volume #define the volume with the name and type, emptyDir means empty directory
-          emptyDir: {}
+          hostPath:
+            path: /data #path on the host machine - i.e., the worker node. It's quite similar to bind mount
+            type: DirectoryOrCreate
