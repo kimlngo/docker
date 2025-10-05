@@ -20,7 +20,6 @@ spec:
             - mountPath: /app/story #/app is the WORKDIR in Dockerfile and from there the text.txt is stored in /story as coded in app.js
               name: story-volume #this name should match with the volume/name below to "wire" the connection between the app and volume
       volumes:
-        - name: story-volume #define the volume with the name and type, emptyDir means empty directory
-          hostPath:
-            path: /data #path on the host machine - i.e., the worker node. It's quite similar to bind mount
-            type: DirectoryOrCreate
+        - name: story-volume
+          persistentVolumeClaim:
+            claimName: host-pvc
