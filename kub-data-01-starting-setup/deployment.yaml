@@ -18,7 +18,10 @@ spec:
           imagePullPolicy: Always
           env:
             - name: STORY_FOLDER
-              value: story
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: folder
           volumeMounts:
             - mountPath: /app/story #/app is the WORKDIR in Dockerfile and from there the text.txt is stored in /story as coded in app.js
               name: story-volume #this name should match with the volume/name below to "wire" the connection between the app and volume
