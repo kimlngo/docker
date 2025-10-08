@@ -17,4 +17,5 @@ spec:
           image: kimlngo/kub-users:latest
           env:
             - name: AUTH_URL
-              value: 10.108.126.21 #this one is obtained from kubectl get services, it is the IP address of the auth-service running on another pod. (Manual Work)
+              # value: 10.108.126.21 #this one is obtained from kubectl get services, it is the IP address of the auth-service running on another pod. (Manual Work)
+              value: 'auth-service.default' #auth-service is from the auth-service.yaml and default is the namespace, we can get the namespace by running kubectl get namespacess
