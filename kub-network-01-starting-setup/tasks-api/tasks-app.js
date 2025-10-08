@@ -6,20 +6,25 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 
 const filePath = path.join(__dirname, process.env.TASKS_FOLDER, 'tasks.txt');
+const AUTH_URL = process.env.AUTH_SERVICE_SERVICE_HOST;
 
 const app = express();
 
 app.use(bodyParser.json());
 
-const extractAndVerifyToken = async (headers) => {
+const extractAndVerifyToken = async headers => {
   if (!headers.authorization) {
     throw new Error('No token provided.');
   }
   const token = headers.authorization.split(' ')[1]; // expects Bearer TOKEN
 
-  const response = await axios.get('http://auth/verify-token/' + token);
+  const response = await axios.get(`http://${AUTH_URL}/verify-token/` + token);
   return response.data.uid;
 };
+
+app.get('/authurl', async (req, res) => {
+  res.status(200).json({ authUrl: `${AUTH_URL}` });
+});
 
 app.get('/tasks', async (req, res) => {
   try {
@@ -33,12 +38,14 @@ app.get('/tasks', async (req, res) => {
       const entries = strData.split('TASK_SPLIT');
       entries.pop(); // remove last, empty entry
       console.log(entries);
-      const tasks = entries.map((json) => JSON.parse(json));
+      const tasks = entries.map(json => JSON.parse(json));
       res.status(200).json({ message: 'Tasks loaded.', tasks: tasks });
     });
   } catch (err) {
     console.log(err);
-    return res.status(401).json({ message: err.message || 'Failed to load tasks.' });
+    return res
+      .status(401)
+      .json({ message: err.message || 'Failed to load tasks.' });
   }
 });
 
@@ -49,7 +56,7 @@ app.post('/tasks', async (req, res) => {
     const title = req.body.title;
     const task = { title, text };
     const jsonTask = JSON.stringify(task);
-    fs.appendFile(filePath, jsonTask + 'TASK_SPLIT', (err) => {
+    fs.appendFile(filePath, jsonTask + 'TASK_SPLIT', err => {
       if (err) {
         console.log(err);
         return res.status(500).json({ message: 'Storing the task failed.' });
