@@ -14,4 +14,10 @@ spec:
     spec:
       containers:
         - name: users
-          image: kimlngo/kub-users
+          image: kimlngo/kub-users:latest
+          env:
+            - name: AUTH_URL
+              value: localhost #since users and auth are two containers running in the same pod hence localhost can be used to call auth from users service
+        # declare auth as another container here so that it will be deployed on the same pod as the users container
+        - name: auth
+          image: kimlngo/kub-auth:latest
