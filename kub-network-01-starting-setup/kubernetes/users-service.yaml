@@ -9,4 +9,4 @@ spec:
     - protocol: 'TCP'
       port: 8080 #outside facing port (external client will call this port)
       targetPort: 8080 #inside port (the port that the app is listening)
-  type: LoadBalancer
+  type: LoadBalancer #LoadBalancer type will expose the port to the public (i.e., accessible from outside world)

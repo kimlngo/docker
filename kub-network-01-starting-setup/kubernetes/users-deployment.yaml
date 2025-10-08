@@ -17,7 +17,4 @@ spec:
           image: kimlngo/kub-users:latest
           env:
             - name: AUTH_URL
-              value: localhost #since users and auth are two containers running in the same pod hence localhost can be used to call auth from users service
-        # declare auth as another container here so that it will be deployed on the same pod as the users container
-        - name: auth
-          image: kimlngo/kub-auth:latest
+              value: 10.108.126.20 #this one is obtained from kubectl get services, it is the IP address of the auth-service running on another pod. (Manual Work)
