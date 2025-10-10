@@ -4,13 +4,11 @@ import './App.css';
 import TaskList from './components/TaskList';
 import NewTask from './components/NewTask';
 
-const AUTH_URL = process.env.AUTH_URL;
-
 function App() {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = useCallback(function () {
-    fetch(`${AUTH_URL}/tasks`, {
+    fetch('http://127.0.0.1:57363/tasks', {
       headers: {
         Authorization: 'Bearer abc',
       },
@@ -31,7 +29,7 @@ function App() {
   );
 
   function addTaskHandler(task) {
-    fetch(`${AUTH_URL}/tasks`, {
+    fetch('http://127.0.0.1:57363/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

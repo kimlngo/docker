@@ -15,6 +15,3 @@ spec:
       containers:
         - name: front-end
           image: kimlngo/kub-frontend:latest
-          env:
-            - name: AUTH_URL
-              value: 'auth-service.default'
